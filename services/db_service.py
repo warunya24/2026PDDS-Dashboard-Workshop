@@ -9,6 +9,7 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(BASE_DIR, "BubbleTeaDB_2026.db")
 
+#checkpoint1
 # Fetches hourly order counts grouped by sales channel
 def get_rush_hours_data() -> pd.DataFrame:
     # Code your query here
@@ -18,10 +19,15 @@ def get_rush_hours_data() -> pd.DataFrame:
             channel,
             COUNT(order_id) AS total_order
         FROM Orders
-        GROUP BY __ , __
-        ORDER BY __;
+        GROUP BY hour_of_day, channel
+        ORDER BY hour_of_day, channel;
     """
 
     with sqlite3.connect(DB_PATH) as conn:
         df = pd.read_sql_query(query, conn)
     return df
+"""
+if __name__ == "__main__":
+    df = get_rush_hours_data()
+    print(df)
+"""
